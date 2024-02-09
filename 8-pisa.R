@@ -15,12 +15,11 @@ theme_set(theme_bw()+
           strip.text.y = element_text(angle=0)))
 
 # Load the data in the file "Data/PISA2015_TauxReussite_SESCgp.xlsx"
-# And also clean the names using `janitor::clean_names()`
 pisa <- ___
 
 # Make the table tidy with `pivot_longer()` : there should be 4 columns: "items", "location", "group", "success_rate"
 pisa_tidy <- pisa %>% 
-    pivot_longer(___)
+    ___
 
 # Make a density plot of the success rates, with a different color for each group, and a different facet for each location
 pisa_tidy %>% 
@@ -46,3 +45,4 @@ pisa_tidy %>%
 pisa_tidy %>% 
     nest(data = ___) %>% 
     ___
+

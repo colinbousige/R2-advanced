@@ -46,11 +46,13 @@ results_exprimes <- total_results %>%
     select(___) %>% 
     pivot_longer(___) %>%
     mutate(candidat = ___) # We will use this later to label the pie chart
+
 # numbers with respect to the total number of registered voters
 results_absolu <- total_results %>% 
     select(___) %>% 
     pivot_longer(___) %>%
     mutate(candidat = ___)
+
 # Let's do the pie charts, just run the code:
 absolu <- results_absolu %>%
     ggplot(aes(x = "", y = pourcent, fill = candidat))+
