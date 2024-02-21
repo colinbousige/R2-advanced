@@ -1,40 +1,40 @@
-# Cycle reproductibilité (2) : R et le Tidyverse
+# Reproducibility cycle (2): R and the Tidyverse
 
 ## Description
 
-Cette archive contient les supports de cours pour le 1er cours du cycle de reproductibilité de l'URFIST de Lyon.
+This archive contains the course materials for the 1st course in the reproducibility cycle at URFIST Lyon.
 
-Lien vers le contenu complet du cours : https://colinbousige.github.io/rclass/
+Link to the full course content: https://colinbousige.github.io/rclass/
 
-## Auteur
+## Author
 
 [Colin Bousige](mailto:colin.bousige@cnrs.fr), Laboratoire des Multimatériaux et Interfaces, UMR 5615 CNRS-Université Lyon 1, Villeurbanne, France.
 
-## Durée
+## Duration
 
-2 jours 
+2 days 
 
-## Objectifs
+## Objectives
 
-- Devenir un utilisateur de R intermédiaire/avancé
-- Utiliser les packages du `tidyverse` pour manipuler et visualiser ses données
+- Become an intermediate/advanced R user
+- Use the `tidyverse' packages to manipulate and visualise data
 
-## Programme
+## Program
 
-- Les données "tidy" : définition et utilisation
-- Le pipe, votre nouvel ami
-- Manipulation de données avec `dplyr` : filtrer, arranger, sélectionner, muter, grouper et résumer ses données
-- Importation et exportation de données avec `readr`
-- Joindre des données avec `dplyr` : `inner_join()`, `left_join()`, `right_join()`, `full_join()`, `semi_join()`, et `anti_join()`
-- Manipulation de chaînes de caractères avec `stringr`
-- Gestion de la date et de l'heure avec `lubridate`
-- Programmation fonctionnelle avec `purrr`
-- Visualisation de données avec `ggplot2`
+- Tidy data: definition and use
+- The pipe, your new friend
+- Data manipulation with `dplyr`: filtering, arranging, selecting, mutating, grouping and summarising your data
+- Importing and exporting data with `readr`.
+- Joining data with `dplyr`: `inner_join()`, `left_join()`, `right_join()`, `full_join()`, `semi_join()`, and `anti_join()`.
+- String manipulation with `stringr`.
+- Managing date and time with `lubridate`.
+- Functional programming with `purrr`
+- Visualising data with `ggplot2`.
 
-## Pré-requis
+## Prerequisites
 
-Avoir un niveau de base en R : savoir lire et manipuler les données, utiliser Rstudio. Venir avec son ordinateur (tout OS) avec les droits administrateurs. Pas de domaine scientifique spécifique attendu : ce qui est vu dans ce cours est adapté à tous les domaines. Les participants sont encouragés à venir avec leurs propres données pour des exercices plus interactifs et adaptés à leurs besoins.
+Have a basic level of R: know how to read and manipulate data, use Rstudio. Bring your own computer (any OS) with administrator rights. No specific scientific field is expected: what is covered in this course is suitable for all fields. Participants are encouraged to bring their own data for more interactive exercises tailored to their needs.
 
-## Type d'intervention
+## Type of intervention
 
-Cours et travaux pratiques. [Le contenu du cours est en ligne](https://colinbousige.github.io/rclass/).
+Lectures and practical work. [The course content is online](https://colinbousige.github.io/rclass/).
