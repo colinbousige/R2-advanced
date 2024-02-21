@@ -11,12 +11,12 @@ library(tidyverse)
 
 df <- ___
 
-# /!\ 
+# /!\
 # With a tibble you could do all this in a single call, but NOT with a data.frame
 data.frame(x = seq(-10,10), # you define the column x
-           y = cos(x), # here to define the column y you refer to 
+           y = cos(x), # here to define the column y you refer to
                        # the vector x that was created outside the call to data.frame
-           z = x*y) # here to define the column z you refer to the vectors 
+           z = x*y) # here to define the column z you refer to the vectors
                     # x and y that were created outside the call to data.frame)
 tibble(x = seq(-10,10),# you define the column x
        y = cos(x),# you define the column y by referring tho the column x previously defined

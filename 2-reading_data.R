@@ -3,9 +3,9 @@
 
 library(tidyverse)
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 ## Exercise 1
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # We will work with 3 different files:
 #     - "Data/rubis_01.txt"
@@ -20,7 +20,7 @@ population <- ___("Data/population.csv")
 FTIR_rocks <- ___("Data/FTIR_rocks.xlsx")
 
 
-# Print their dimensions and column names. 
+# Print their dimensions and column names.
 
 # Dimensions
 rubis_01
@@ -32,9 +32,9 @@ population
 FTIR_rocks
 
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # #
 ## Exercise 2
-# # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # We will use the TGA data file `"Data/ATG.txt"`
 
@@ -51,13 +51,13 @@ d <- read_table("Data/ATG.txt",
 d
 
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 ## Exercise 3
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # - Using list.files(), find all the files in the "Data" folder that have the "sampleX_tempK_time-UNIT.csv" pattern.
 # - Read them all in a tidy tibble called `tib`.
-# - Make sure to add a column named `"file"` containing the list of filenames: look at the `id` parameter 
+# - Make sure to add a column named `"file"` containing the list of filenames: look at the `id` parameter
 
 flist <- list.files(____)
 tib <- read_csv(___,           # what do we want to read? give the vector of file names
@@ -65,9 +65,9 @@ tib <- read_csv(___,           # what do we want to read? give the vector of fil
 
 
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 ## Exercise 4
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # We want to do a similar exercise with the files in the "Data" folder that have the "rubis_XX.txt" pattern. These files have two columns, `w` and `intensity`, and we want to read them in a single tidy tibble called `tib`.
 # - What function do we need to use to read such file?
