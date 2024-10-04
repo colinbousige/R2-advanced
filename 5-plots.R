@@ -17,13 +17,13 @@ theme_set(theme_bw())
 ### Basic stuff 1
 
 # Modify the following code to add a color depending on the `gear` column:
-mtcars %>% # we work on the mtcars dataset, send it to ggplot
+mtcars |> # we work on the mtcars dataset, send it to ggplot
     # define the x and y variables of the plot, and also the color:
     ggplot(aes(x = wt, y = mpg))+ 
         geom_point() # plot with points
 
 # Now change the color and shape of the points, and add transparency
-mtcars %>% 
+mtcars |> 
     ggplot(aes(x = wt, y = mpg))+ 
         geom_point(___)
 
@@ -31,7 +31,7 @@ mtcars %>%
 
 # What happens if you use `factor(gear)` instead?
 
-P <- mtcars %>% # we work on the mtcars dataset, send it to ggplot
+P <- mtcars |> # we work on the mtcars dataset, send it to ggplot
     # define the x and y variables of the plot, and also the color:
     ggplot(aes(x = wt, y = mpg, color = gear))+ 
         geom_point() # plot with points
@@ -54,7 +54,7 @@ P + ___
 ### Faceting 1
 
 # Modify the following code to place each `carb` in a different facet. Also add a color, but remove the legend.
-mtcars %>% # we work on the mtcars dataset, send it to ggplot
+mtcars |> # we work on the mtcars dataset, send it to ggplot
     ggplot(aes(x = wt, y = mpg))+ # define the x and y variables of the plot, and also the color
         geom_point() +   # plot with points
         facet____(___) + # add a faceting
@@ -64,7 +64,7 @@ mtcars %>% # we work on the mtcars dataset, send it to ggplot
 ### Faceting 2
 
 # Modify the following code to arrange `mpg` vs `wt` plots on a grid showing `gear` vs `carb`. Also add a color depending on `cyl`. Also, try adding a free `x` scale range, or a free `y` scale range, or free `x` and `y` scale ranges.
-mtcars %>% # we work on the mtcars dataset, send it to ggplot
+mtcars |> # we work on the mtcars dataset, send it to ggplot
     ggplot(aes(x = ___, y = ___))+ # define the x and y variables of the plot, and also the color
         geom_point() +   # plot with points
         facet____(___) # add a faceting
@@ -80,7 +80,7 @@ df
 
 # Using `ggplot`, plot `y` as a function of `x` with points and save it into `Py`:
 
-Py <- df %>% 
+Py <- df |> 
     ___
 Py
 
@@ -92,19 +92,19 @@ Py
 
 # Using `ggplot`, plot `z` as a function of `x` with a red line and save it into `Pz`:
 
-Pz <- df %>% 
+Pz <- df |> 
     ___
 Pz
 
 # Using `ggplot`, plot a histogram of `w` with transparent blue bars surrounded by a red line, and save it into `Pw`. You can play with the number of bins too.
 
-Pw <- df %>% 
+Pw <- df |> 
     ___
 Pw
 
 # Using `ggplot`, plot a density of `u` with a transparent blue area surrounded by a red line, and save it into `Pu`. Play with the `bw` parameter so that you see many peaks.
 
-Pu <- df %>% 
+Pu <- df |> 
     ___
 Pu
 
@@ -131,11 +131,11 @@ Pu
 # Plot with geom_contour_filled() or geom_raster() and see the difference
 # Add big red diamond points in (4.4, 80) and (1.94, 53) using either geom_point() or annotate("point", ...)
 
-faithfuld %>% 
+faithfuld |> 
     ggplot(___)+
         geom_contour_filled()
 
-faithfuld %>% 
+faithfuld |> 
     ggplot(___)+
         geom_raster()
 

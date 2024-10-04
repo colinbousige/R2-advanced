@@ -20,13 +20,13 @@ FTIR_rocks <- readxl::read_excel("Data/FTIR_rocks.xlsx")
 # Print their dimensions and column names. 
 
 # Dimensions
-rubis_01 %>% dim()
-population %>% dim()
-FTIR_rocks %>% dim()
+rubis_01 |> dim()
+population |> dim()
+FTIR_rocks |> dim()
 # Names
-rubis_01 %>% names()
-population %>% names()
-FTIR_rocks %>% names()
+rubis_01 |> names()
+population |> names()
+FTIR_rocks |> names()
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 ## Exercise 2
@@ -88,12 +88,12 @@ tib <- lapply(flist, read_table, col_names = c("w", "intensity"))
 tib <- map(flist, read_table)
 
 read_function <- function(filename){
-    read_table(filename, col_names = c("w", "intensity")) %>% 
+    read_table(filename, col_names = c("w", "intensity")) |> 
         mutate(file = basename(filename))
 }
 tib <- map_df(flist, read_function)
 
-tib <- tibble(file = flist) %>% 
+tib <- tibble(file = flist) |> 
     mutate(data = map(file, read_table, col_names = c("w", "intensity")),
-           file = basename(file)) %>% 
+           file = basename(file)) |> 
     unnest(data)

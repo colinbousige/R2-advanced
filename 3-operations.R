@@ -17,7 +17,7 @@ popul
 # Are the data tidy? make the table tidy if needed
 
 popul
-popul.tidy <- popul %>%
+popul.tidy <- popul |>
     pivot_longer(
         cols     = ___, # what are the columns we want to keep? -> -these
         names_to = ___, # name of the column gathering the original column names
@@ -26,7 +26,7 @@ popul.tidy <- popul %>%
 
 # Create a subset containing the data for Montpellier using a [filtering](https://dplyr.tidyverse.org/reference/filter.html) function from the `tidyverse`.
 
-mtp <- popul.tidy %>% ___
+mtp <- popul.tidy |> ___
 
 # What is the max and min of population in this city?
 
@@ -36,22 +36,22 @@ mtp <- popul.tidy %>% ___
 
 # What is the total population over all cities in 2012?
 
-popul.tidy %>%
-    ___ %>%         # You need to filter the data for the year 2012
-    ___ %>%         # Then select the right column
+popul.tidy |>
+    ___ |>         # You need to filter the data for the year 2012
+    ___ |>         # Then select the right column
     ___             # And perform the sum of its data
 
 # What is the total population per year?
 
-popul.tidy %>%
-    ___ %>%    # You need to group data per year
+popul.tidy |>
+    ___ |>    # You need to group data per year
     ___        # Then summarize the data of each year as
                # the total population of each group
 
 # What is the average population per city over the years?
 
-popul.tidy %>%
-    ___ %>%  # You need to group data per...?
+popul.tidy |>
+    ___ |>  # You need to group data per...?
     ___      # Then...?
 
 
@@ -68,12 +68,12 @@ ___
 pp1 <- read____(___)
 pp2 <- read____(___)
 
-# Create a new tibble `pp` by using the pipe operator (`%>%`) and successively:
+# Create a new tibble `pp` by using the pipe operator (`|>`) and successively:
 # - joining the two tibbles into one using `inner_join()`
 # - adding a column `age` containing the age in years (use `lubridate::time_length(x, 'years')` with x a time difference in days) by using `mutate()`
 
-pp <- pp1 %>%
-    ___ %>%       # you need to join with pp2
+pp <- pp1 |>
+    ___ |>       # you need to join with pp2
     mutate(___)   # then add a column `age` computing the right thing
 pp
 
@@ -82,21 +82,21 @@ pp
 
 # Using `group_by()` and `summarize()`:
 # - Show the number of males and females in the table (use the counter `n()`)
-pp %>%
-    ___ %>%
+pp |>
+    ___ |>
     ___
 # - Show the average age per gender
-pp %>%
-    ___ %>%
+pp |>
+    ___ |>
     ___
 # - Show the average size per gender and institution
-pp %>%
-    ___ %>%
+pp |>
+    ___ |>
     ___
 # - Show the number of people from each country, sorted by descending population
-pp %>%
-    ___ %>%
-    ___ %>%
+pp |>
+    ___ |>
+    ___ |>
     ___
 
 
@@ -138,7 +138,7 @@ pp ___
 flist <- list.files(____)
 
 tib <- read_csv(___,           # what do we want to read? give the vector of file names
-                id = ___) %>%  # what is the name of the column containing the file names ?
+                id = ___) |>  # what is the name of the column containing the file names ?
         mutate(___)            # modify this column so that it contains just the file
                                # name and not the full path
 
@@ -150,10 +150,10 @@ tib <- read_csv(___,           # what do we want to read? give the vector of fil
 # If applicable, make sure that the resulting columns are numeric by getting rid of the annoying characters.
 # Look into the `stringr` cheat sheet for help: https://github.com/rstudio/cheatsheets/blob/main/strings.pdf
 
-tib <- tib %>%
+tib <- tib |>
     separate(col = ___, # what is the column containing these informations
              into = ___, # vector of strings containing new column names (NA to drop a column)
-             convert = ___) %>% # do we convert strings to numbers if applicable?
+             convert = ___) |> # do we convert strings to numbers if applicable?
     mutate(sample = ___,
            T = ___,
            time_unit = ___,
@@ -163,8 +163,8 @@ tib
 
 # Now we want all times to be in the same unit. Using `mutate()` and `ifelse()`, convert the minutes in seconds, then get rid of the `time_unit` column.
 
-tib <- tib %>%
-    mutate(time = ifelse(test, yes, no)) %>% # convert minutes to seconds
+tib <- tib |>
+    mutate(time = ifelse(test, yes, no)) |> # convert minutes to seconds
     select(___) # get rid of the `time_unit` column
 tib
 

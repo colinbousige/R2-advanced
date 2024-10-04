@@ -14,13 +14,13 @@ theme_set(theme_bw())
 ### Basic stuff 1
 
 # Modify the following code to add a color depending on the `gear` column:
-mtcars %>% # we work on the mtcars dataset, send it to ggplot
+mtcars |> # we work on the mtcars dataset, send it to ggplot
     # define the x and y variables of the plot, and also the color:
     ggplot(aes(x = wt, y = mpg, col=gear))+ 
         geom_point() # plot with points
 
 # Now change the color and shape of the points, and add transparency
-mtcars %>% 
+mtcars |> 
     ggplot(aes(x = wt, y = mpg, col=gear))+ 
         geom_point(shape=17, alpha=0.5, size=5)+
         scale_color_distiller(palette="Set1")
@@ -29,7 +29,7 @@ mtcars %>%
 
 # What happens if you use `factor(gear)` instead?
 
-P <- mtcars %>% # we work on the mtcars dataset, send it to ggplot
+P <- mtcars |> # we work on the mtcars dataset, send it to ggplot
     # define the x and y variables of the plot, and also the color:
     ggplot(aes(x = wt, y = mpg, color = factor(gear)))+ 
         geom_point(size=5) # plot with points
@@ -68,7 +68,7 @@ P +
 ### Faceting 1
 
 # Modify the following code to place each `carb` in a different facet. Also add a color, but remove the legend.
-mtcars %>% # we work on the mtcars dataset, send it to ggplot
+mtcars |> # we work on the mtcars dataset, send it to ggplot
     ggplot(aes(x = wt, y = mpg, color=factor(carb)))+ # define the x and y variables of the plot, and also the color
         geom_point(size=5) +   # plot with points
         facet_wrap(~carb) + # add a faceting
@@ -78,7 +78,7 @@ mtcars %>% # we work on the mtcars dataset, send it to ggplot
 ### Faceting 2
 
 # Modify the following code to arrange `mpg` vs `wt` plots on a grid showing `gear` vs `carb`. Also add a color depending on `cyl`. Also, try adding a free `x` scale range, or a free `y` scale range, or free `x` and `y` scale ranges.
-mtcars %>% # we work on the mtcars dataset, send it to ggplot
+mtcars |> # we work on the mtcars dataset, send it to ggplot
     ggplot(aes(x = wt, y = mpg, color=factor(cyl)))+ # define the x and y variables of the plot, and also the color
         geom_point(size=5) +   # plot with points
         facet_grid(gear ~ carb, scales = 'free') # add a faceting
@@ -94,7 +94,7 @@ df
 
 # Using `ggplot`, plot `y` as a function of `x` with points and save it into `Py`:
 
-Py <- df %>% 
+Py <- df |> 
     ggplot(aes(x = x, y = y))+ 
         geom_point()
 Py
@@ -107,21 +107,21 @@ Py
 
 # Using `ggplot`, plot `z` as a function of `x` with a red line and save it into `Pz`:
 
-Pz <- df %>% 
+Pz <- df |> 
     ggplot(aes(x = x, y = z))+ 
         geom_line(color="red")
 Pz
 
 # Using `ggplot`, plot a histogram of `w` with transparent blue bars surrounded by a red line, and save it into `Pw`. You can play with the number of bins too.
 
-Pw <- df %>% 
+Pw <- df |> 
     ggplot(aes(x = w))+ 
         geom_histogram(color="red", fill="blue", alpha=0.5, bins=20)
 Pw
 
 # Using `ggplot`, plot a density of `u` with a transparent blue area surrounded by a red line, and save it into `Pu`. Play with the `bw` parameter so that you see many peaks.
 
-Pu <- df %>% 
+Pu <- df |> 
     ggplot(aes(x = u))+ 
         geom_density(color="red", fill="blue", alpha=0.5, bw=0.1)
 Pu
@@ -143,11 +143,11 @@ Py+Pz+Pw+Pu
 # Plot with geom_contour_filled() or geom_raster() and see the difference
 # Add big red diamond points in (4.4, 80) and (1.94, 53) using either geom_point() or annotate("point", ...)
 
-faithfuld %>% 
+faithfuld |> 
     ggplot(aes(x=waiting, y=eruptions, z=density))+
         geom_contour_filled()
 
-faithfuld %>% 
+faithfuld |> 
     ggplot(aes(x=waiting, y=eruptions, fill=density))+
         geom_raster(interpolate = TRUE)+
         scale_fill_viridis_c(option='B')

@@ -18,31 +18,31 @@ theme_set(theme_bw()+
 pisa <- ___
 
 # Make the table tidy with `pivot_longer()` : there should be 4 columns: "items", "location", "group", "success_rate"
-pisa_tidy <- pisa %>% 
+pisa_tidy <- pisa |> 
     ___
 
 # Make a density plot of the success rates, with a different color for each group, and a different facet for each location
-pisa_tidy %>% 
+pisa_tidy |> 
     ggplot(___)
 
 # Make a boxplot of the success rates, with a different color for each group, and a different facet for each location
-pisa_tidy %>% 
+pisa_tidy |> 
     ggplot(___)
 
 # Make a boxplot of the success rates, with a different color for each location, and a different facet for each group
-pisa_tidy %>% 
+pisa_tidy |> 
     ggplot(___)
 
 # Make a table with the results of a Shapiro-Wilk test for each group and location, and a column indicating if the success rates are Gaussian
-pisa_tidy %>% 
-    nest(data = -c(group, location)) %>% 
+pisa_tidy |> 
+    nest(data = -c(group, location)) |> 
     mutate(shapiro = map(data, ~shapiro.test(___)),
-           tidied = map(shapiro, tidy)) %>% 
-    unnest(tidied) %>% 
+           tidied = map(shapiro, tidy)) |> 
+    unnest(tidied) |> 
     mutate(is_gaussian = ___)
 
 # Make a table with the results of a t-test for each group comparing the difference between locations, and a column indicating if the success rates are statistically different
-pisa_tidy %>% 
-    nest(data = ___) %>% 
+pisa_tidy |> 
+    nest(data = ___) |> 
     ___
 

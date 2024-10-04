@@ -21,12 +21,12 @@ theme_set(theme_bw()+
 # - replace the spaces with a dash using `stringr::str_replace_all()`
 # - remove the `subregion` column using `select()`
 
-cartefrance <- map_data('france') %>% 
-    as_tibble() %>% 
-    mutate(region = region %>%
-           stri_trans_general("lower;Latin-ASCII") %>% 
-           str_remove_all("'") %>%
-           str_replace_all(" ","-")) %>% 
+cartefrance <- map_data('france') |> 
+    as_tibble() |> 
+    mutate(region = region |>
+           stri_trans_general("lower;Latin-ASCII") |> 
+           str_remove_all("'") |>
+           str_replace_all(" ","-")) |> 
     select(-subregion)
 
 # Take a look at the data in `cartefrance` using `glimpse()`
@@ -37,11 +37,11 @@ glimpse(cartefrance)
 # - transform the region names to lower case and remove accents and spaces.
 # - remove the single quotes from the region names
 # - replace the spaces with a dash
-psup <- read_csv2("Data/fr-esr-parcoursup.csv") %>% 
-    rename(region = `Département de l’établissement`) %>% 
-    mutate(region = region %>%
-            stri_trans_general("lower;Latin-ASCII") %>% 
-            str_remove_all("'") %>%
+psup <- read_csv2("Data/fr-esr-parcoursup.csv") |> 
+    rename(region = `Département de l’établissement`) |> 
+    mutate(region = region |>
+            stri_trans_general("lower;Latin-ASCII") |> 
+            str_remove_all("'") |>
             str_replace_all(" ","-")
           )
 
@@ -68,29 +68,29 @@ glimpse(psup)
 # - and summarize the results by region and year
 
 bacHonours <- 
-    psup %>% 
+    psup |> 
     select(Session, region,
            `Effectif des admis néo bacheliers`,
            `Dont effectif des admis néo bacheliers avec mention Très Bien avec félicitations au bac`,
-           `Dont effectif des admis néo bacheliers avec mention Très Bien au bac`) %>% 
+           `Dont effectif des admis néo bacheliers avec mention Très Bien au bac`) |> 
     rename(year = Session,
            admis = `Effectif des admis néo bacheliers`,
            dont_tb = `Dont effectif des admis néo bacheliers avec mention Très Bien avec félicitations au bac`,
-           dont_tbf = `Dont effectif des admis néo bacheliers avec mention Très Bien au bac`) %>% 
-    mutate(dont_tb = as.numeric(dont_tb)) %>% 
+           dont_tbf = `Dont effectif des admis néo bacheliers avec mention Très Bien au bac`) |> 
+    mutate(dont_tb = as.numeric(dont_tb)) |> 
     summarise(.by = c(region,year), 
               admis = sum(admis),
               dont_tb = sum(dont_tb),
-              dont_tbf = sum(dont_tbf)) %>%
+              dont_tbf = sum(dont_tbf)) |>
     mutate(prop = (dont_tb+dont_tbf)/admis*100)
 
 # Now we want to plot the results on a map of France.
 # Combine the data from `cartefrance` and `bacHonours` using `inner_join()`
 
-carte_bacHonours <- bacHonours %>% inner_join(cartefrance)
+carte_bacHonours <- bacHonours |> inner_join(cartefrance)
 
 # Now we can plot the results on a map of France:
-carte_bacHonours %>% 
+carte_bacHonours |> 
     ggplot(aes(long,lat, group=group, fill=prop))+
         geom_polygon()+
         coord_map() +
@@ -112,26 +112,26 @@ carte_bacHonours %>%
 # - and summarize the results by region and year
 
 girlsBoys <- 
-    psup %>% 
+    psup |> 
     select(Session, region,
            `Effectif total des candidats ayant accepté la proposition de l’établissement (admis)`,
-           `Dont effectif des candidates admises`) %>% 
+           `Dont effectif des candidates admises`) |> 
     rename(year = Session,
            admis = `Effectif total des candidats ayant accepté la proposition de l’établissement (admis)`,
            girls = `Dont effectif des candidates admises`
-           ) %>% 
+           ) |> 
     summarise(.by = c(region,year), 
               admis = sum(admis),
-              girls = sum(girls)) %>%
+              girls = sum(girls)) |>
     mutate(prop = girls/admis * 100)
 
 # Now we want to plot the results on a map of France.
 # Combine the data from `cartefrance` and `girlsBoys` using `inner_join()`
 
-carte_girlsBoys <- girlsBoys %>% inner_join(cartefrance)
+carte_girlsBoys <- girlsBoys |> inner_join(cartefrance)
 
 # Now we can plot the results on a map of France:
-carte_girlsBoys %>% 
+carte_girlsBoys |> 
     ggplot(aes(long,lat, group=group, fill=prop))+
         geom_polygon()+
         coord_map() +

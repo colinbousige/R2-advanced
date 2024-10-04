@@ -21,9 +21,9 @@ theme_set(theme_bw()+
 # - replace the spaces with a dash using `stringr::str_replace_all()`
 # - remove the `subregion` column using `select()`
 
-cartefrance <- map_data('france') %>% 
-    as_tibble() %>% 
-    mutate(region = ___) %>% 
+cartefrance <- map_data('france') |> 
+    as_tibble() |> 
+    mutate(region = ___) |> 
     ___
 
 # Take a look at the data in `cartefrance` using `glimpse()`
@@ -59,10 +59,10 @@ glimpse(psup)
 # - calculate the proportion of baccalaureate holders with honours
 # - and summarize the results by region and year
 
-bacHonours <- psup %>% 
-    select(___) %>% 
-    rename(___) %>% 
-    summarise(___) %>%
+bacHonours <- psup |> 
+    select(___) |> 
+    rename(___) |> 
+    summarise(___) |>
     mutate(___)
 
 # Now we want to plot the results on a map of France.
@@ -71,7 +71,7 @@ bacHonours <- psup %>%
 carte_bacHonours <- ___
 
 # Now we can plot the results on a map of France:
-carte_bacHonours %>% 
+carte_bacHonours |> 
     ggplot(aes(long, lat, group=group, fill=___))+
         geom_polygon()+
         coord_map() +
@@ -92,7 +92,7 @@ carte_bacHonours %>%
 # - calculate the proportion of girls accepted onto a course
 # - and summarize the results by region and year
 
-girlsBoys <- psup %>% 
+girlsBoys <- psup |> 
     ___
 
 # Now we want to plot the results on a map of France.
@@ -101,5 +101,5 @@ girlsBoys <- psup %>%
 carte_girlsBoys <- ___
 
 # Now we can plot the results on a map of France:
-carte_girlsBoys %>% 
+carte_girlsBoys |> 
     ___

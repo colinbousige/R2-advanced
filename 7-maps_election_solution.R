@@ -17,16 +17,16 @@ theme_set(theme_void())
 # - replace the spaces with a dash using `stringr::str_replace_all()`
 
 elections <- read_excel("Data/Presidentielle_2017_Resultats_Communes_Tour_2.xls",
-                        skip=3) %>% 
-    rename(region=`Libellé du département`) %>% 
-    mutate(region = region %>%
-                stri_trans_general("lower;Latin-ASCII") %>% 
-                str_remove_all("'") %>%
+                        skip=3) |> 
+    rename(region=`Libellé du département`) |> 
+    mutate(region = region |>
+                stri_trans_general("lower;Latin-ASCII") |> 
+                str_remove_all("'") |>
                 str_replace_all(" ","-"))
 
 
 # Let's summarize the results for the whole country:
-total_results <- elections %>% 
+total_results <- elections |> 
     summarise(tot_votant               = sum(Votants), 
               tot_blanc                = sum(Blancs),
               tot_exprimes             = sum(`Exprimés`), 
@@ -41,7 +41,7 @@ total_results <- elections %>%
               pourcent_lepen           = tot_lepen / tot_inscrits * 100,
               pourcent_blanc           = (tot_blanc+tot_nul) / tot_inscrits * 100, 
               pourcent_abstention      = tot_abs / tot_inscrits* 100
-              ) %>% 
+              ) |> 
     mutate(gagnant = ifelse(pourcent_macron > 50, 'Macron', 'Le Pen'))
 
 # Now we can make a pie chart of the results, after making the previous table tidy:
@@ -49,28 +49,28 @@ total_results <- elections %>%
 # We will make two pie charts, one with the numbers with respect to the total number of valid votes, and one with respect to the total number of registered voters.
 
 # numbers with respect to the total number of valid votes
-results_exprimes <- total_results %>% 
-    select(pourcent_macron_exprimes,pourcent_lepen_exprimes) %>% 
+results_exprimes <- total_results |> 
+    select(pourcent_macron_exprimes,pourcent_lepen_exprimes) |> 
     pivot_longer(cols=everything(), 
                  names_to='candidat', 
                  values_to='pourcent',
-                 names_prefix = "pourcent_") %>%
-    mutate(candidat = candidat %>% str_replace_all("macron_exprimes", 'E. Macron')) %>%
-    mutate(candidat = candidat %>% str_replace_all("lepen_exprimes", 'M. Le Pen'))
+                 names_prefix = "pourcent_") |>
+    mutate(candidat = candidat |> str_replace_all("macron_exprimes", 'E. Macron')) |>
+    mutate(candidat = candidat |> str_replace_all("lepen_exprimes", 'M. Le Pen'))
 # numbers with respect to the total number of registered voters
-results_absolu <- total_results %>% 
-    select(starts_with('pourcent')) %>% 
+results_absolu <- total_results |> 
+    select(starts_with('pourcent')) |> 
     pivot_longer(cols=everything(), 
                  names_to='candidat', 
                  values_to='pourcent',
-                 names_prefix = "pourcent_") %>%
-    filter(!candidat %>% str_detect('exprimes')) %>%
-    mutate(candidat = candidat %>% str_to_title()) %>%
-    mutate(candidat = candidat %>% str_replace_all("Macron", 'E. Macron')) %>%
-    mutate(candidat = candidat %>% str_replace_all("Lepen", 'M. Le Pen'))
+                 names_prefix = "pourcent_") |>
+    filter(!candidat |> str_detect('exprimes')) |>
+    mutate(candidat = candidat |> str_to_title()) |>
+    mutate(candidat = candidat |> str_replace_all("Macron", 'E. Macron')) |>
+    mutate(candidat = candidat |> str_replace_all("Lepen", 'M. Le Pen'))
 
 # Now we can make a pie chart of the results
-absolu <- results_absolu %>%
+absolu <- results_absolu |>
     ggplot(aes(x = "", y = pourcent, fill = candidat))+
         geom_bar(stat="identity", width=1)+
         coord_polar("y")+
@@ -86,7 +86,7 @@ absolu <- results_absolu %>%
               legend.position = 'none')+
         geom_text(aes(label = glue::glue("{candidat}\n{round(pourcent,1)} %")),
             position = position_stack(vjust = 0.5), col='white', size=8)
-exprimes <- results_exprimes %>%
+exprimes <- results_exprimes |>
     ggplot(aes(x = "", y = pourcent, fill = candidat))+
         geom_bar(stat="identity", width=1)+
         coord_polar("y")+
@@ -105,15 +105,15 @@ exprimes + absolu +
 
 
 library(waffle)
-total_results %>% 
-    select(starts_with('tot')) %>% 
+total_results |> 
+    select(starts_with('tot')) |> 
     pivot_longer(cols=everything(), 
                  names_to='candidat', 
                  values_to='total',
-                 names_prefix = "tot_") %>%
-    mutate(candidat = candidat %>% str_to_title()) %>% 
-    mutate(total = total/100000) %>%
-    filter(candidat%in%c('Macron','Lepen','Nul','Blanc')) %>%
+                 names_prefix = "tot_") |>
+    mutate(candidat = candidat |> str_to_title()) |> 
+    mutate(total = total/100000) |>
+    filter(candidat%in%c('Macron','Lepen','Nul','Blanc')) |>
     ggplot(aes(fill = candidat, values = total)) +
     geom_waffle(n_rows = 20,
                 size = 0.33, 
@@ -130,17 +130,17 @@ total_results %>%
 # - remove the `subregion` column using `select()`
 # - perform the same string modifications as before on the region column
 
-cartefrance <- map_data('france') %>% 
-    as_tibble() %>% 
-    mutate(region = region %>%
-           stri_trans_general("lower;Latin-ASCII") %>% 
-           str_remove_all("'") %>%
-           str_replace_all(" ","-")) %>% 
+cartefrance <- map_data('france') |> 
+    as_tibble() |> 
+    mutate(region = region |>
+           stri_trans_general("lower;Latin-ASCII") |> 
+           str_remove_all("'") |>
+           str_replace_all(" ","-")) |> 
     select(-subregion)
 
 # Take a look at the data in `cartefrance` and `elections` using `glimpse()`
-elections %>% glimpse()
-cartefrance %>% glimpse()
+elections |> glimpse()
+cartefrance |> glimpse()
 
 # Now we want a usable summary of the results.
 # We will use the `summarise()` and `mutate()` functions to calculate:
@@ -154,7 +154,7 @@ cartefrance %>% glimpse()
 # - the percentage of votes for Macron, 
 # - the percentage of votes for Le Pen, 
 # - and the winner of the election.
-results <- elections %>% 
+results <- elections |> 
     summarise(.by               = region,
               tot_inscrits      = sum(Inscrits),
               tot_votants       = sum(Votants), 
@@ -167,33 +167,33 @@ results <- elections %>%
               pourcent_blancnul = (tot_blanc+tot_nul) / tot_votants * 100, 
               pourcent_abs      = tot_abs / tot_inscrits * 100,
               pourcent_macron   = tot_macron / tot_exprimes * 100, 
-              pourcent_lepen    = tot_lepen / tot_exprimes * 100) %>% 
+              pourcent_lepen    = tot_lepen / tot_exprimes * 100) |> 
     mutate(gagnant = ifelse(pourcent_macron > 50, 'Macron', 'Le Pen'))
 
 # Now let's join the results with the map data.
-carte_results <- results %>% inner_join(cartefrance)
+carte_results <- results |> inner_join(cartefrance)
 
 # Now we can plot the results on a map of France, you can play with what you want to show.
 
-carte_results %>% 
+carte_results |> 
     ggplot(aes(long,lat, group=group, fill=gagnant))+
         geom_polygon()+
         coord_map() +
         scale_fill_manual(values=c('royalblue', 'orange'))
 
-macron <-carte_results %>% 
+macron <-carte_results |> 
     ggplot(aes(long,lat, group=group, fill=pourcent_macron))+
         geom_polygon()+
         coord_map() +
         scale_fill_distiller(palette=13, direction=1)+
         labs(title="E. Macron", fill="% des votes\nexprimés")
-lepen <- carte_results %>% 
+lepen <- carte_results |> 
     ggplot(aes(long,lat, group=group, fill=pourcent_lepen))+
         geom_polygon()+
         coord_map() +
         scale_fill_distiller(palette=1, direction=1)+
         labs(title="M. Le Pen", fill="% des votes\nexprimés")
-abstention <- carte_results %>% 
+abstention <- carte_results |> 
     ggplot(aes(long,lat, group=group, fill=pourcent_abs))+
         geom_polygon()+
         coord_map() +

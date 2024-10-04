@@ -25,7 +25,7 @@ tibble(x = seq(-10,10),# you define the column x
 
 # Print the 4 first lines of the table df.
 # Hint: Take a look at the head() function
-df %>% head(4)
+df |> head(4)
 
 # Print the second (*i.e.* `y`) column with 7 different methods.
 # Hint: Take a look at the `$` operator, the `[[` operator, the `select()` function, and the `pull()` function.
@@ -34,22 +34,22 @@ df[,2]
 df[,'y']
 df[['y']]
 df[[2]]
-df %>% select(y)
-df %>% pull(y)
+df |> select(y)
+df |> pull(y)
 
 # Modify the column `z` so that it contains its value minus its minimum using 2 different methods.
 # Hint: Take a look at the `$` operator and the `mutate()` function.
 df$z <- df$z - min(df$z)
-df <- df %>% mutate(z = z - min(z))
+df <- df |> mutate(z = z - min(z))
 
 # Print the average of the `z` column.
 mean(df$z)
-df %>% summarize(mean(z))
+df |> summarize(mean(z))
 
 # Using `plot(x,y)` where `x` and `y` are vectors, plot the 2nd column as a function of the first.
 plot(df$x, df$y)
 # Do the same with ggplot2
-df %>% 
+df |> 
     ggplot(aes(x,y)) + 
     geom_point()
 
