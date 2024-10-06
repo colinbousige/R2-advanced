@@ -77,18 +77,18 @@ eat_fit_rs |>
 
 # Show the best model
 eat_fit_rs |> 
-    show_best("rsq")
+    show_best(metric="rsq")
 
 # Select the best model
 best_tree <- eat_fit_rs |>
-    select_best("rsq")
+    select_best(metric="rsq")
 
 # Finalize the workflow
 final_wf <- 
     eat_wf |> 
     finalize_workflow(best_tree)
 
-# Fit the final workflow on the training data
+# Fit the final workflow on the validation data
 final_fit <- 
     final_wf |>
     last_fit(data_split) 
@@ -100,9 +100,11 @@ final_fit |>
 # Show the predictions on the test set
 final_fit |>
     collect_predictions() |> 
-    ggplot(aes(x = eat, y = .pred)) +
+    ggplot(aes(x = eat, y = (eat-.pred)/eat)) +
     geom_point() +
-    geom_abline(color = "red")
+    labs(y="Relative error on prediction [%]",
+         x="True atomisation energy [Ry]") +
+    geom_hline(yintercept=0, color = "red")
 
 # Extract the final model
 final_tree <- extract_workflow(final_fit)
