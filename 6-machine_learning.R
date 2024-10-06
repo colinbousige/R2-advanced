@@ -100,9 +100,9 @@ final_fit |>
 # Show the predictions on the test set
 final_fit |>
     collect_predictions() |> 
-    ggplot(aes(x = eat, y = (eat-.pred)/eat)) +
-    geom_point() +
-    labs(y="Relative error on prediction [%]",
+    ggplot(aes(x = eat, y = eat-.pred)) +
+    geom_point(alpha=.3) +
+    labs(y="Error on prediction [Ry]",
          x="True atomisation energy [Ry]") +
     geom_hline(yintercept=0, color = "red")
 
