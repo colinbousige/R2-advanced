@@ -32,16 +32,16 @@ theme_set(
 # Read data
 # # # # # # # # # # # # # # # # #
 
-children <- read_csv("Data/children_per_woman_total_fertility.csv")
-income <- read_csv("Data/income_per_person.csv")
-pop <- read_csv("Data/population_total.csv")
-religion <- read_csv("Data/religion.csv")
+children_raw <- read_csv("Data/children_per_woman_total_fertility.csv")
+income_raw <- read_csv("Data/income_per_person.csv")
+pop_raw <- read_csv("Data/population_total.csv")
+religion_raw <- read_csv("Data/religion.csv")
 
 # # # # # # # # # # # # # # # # #
 # Prepare data in the right format
 # # # # # # # # # # # # # # # # #
 
-religion <- religion |>
+religion <- religion_raw |>
     filter(Year == 2020) |>
     select(Country, Buddhists:Unaffiliated) |>
     pivot_longer(
@@ -52,32 +52,20 @@ religion <- religion |>
     filter(.by = Country, Proportion == max(Proportion)) |>
     select(-Proportion)
 
-children <- children |>
-    select(Country, '1900':'2018') |>
-    pivot_longer(
-        col = -Country,
-        names_to = "Year",
-        values_to = "Fertility",
-        names_transform = list(Year = as.numeric)
-    )
+prepare_data <- function(df, value_name) {
+    df |>
+        select(Country, '1900':'2018') |>
+        pivot_longer(
+            col = -Country,
+            names_to = "Year",
+            values_to = value_name,
+            names_transform = list(Year = as.numeric)
+        )
+}
 
-income <- income |>
-    select(Country, '1900':'2018') |>
-    pivot_longer(
-        col = -Country,
-        names_to = "Year",
-        values_to = "Income",
-        names_transform = list(Year = as.numeric)
-    )
-
-pop <- pop |>
-    select(Country, '1900':'2018') |>
-    pivot_longer(
-        col = -Country,
-        names_to = "Year",
-        values_to = "Population",
-        names_transform = list(Year = as.numeric)
-    )
+children <- children_raw |> prepare_data("Fertility")
+income <- income_raw |> prepare_data("Income")
+pop <- pop_raw |> prepare_data("Population")
 
 # # # # # # # # # # # # # # # # #
 # Join all data together
@@ -90,6 +78,16 @@ data <- inner_join(children, income) |>
 # # # # # # # # # # # # # # # # #
 # Create the plot that you want, without animations
 # # # # # # # # # # # # # # # # #
+breakslog10 <- function(x) {
+    low <- floor(log10(min(x)))
+    high <- ceiling(log10(max(x)))
+    return(10^(seq(low, high)))
+}
+minorbreakslog10 <- function(x) {
+    low <- floor(log10(min(x)))
+    high <- ceiling(log10(max(x)))
+    return(rep(1:9, length(low:high)) * (10^rep(low:high, each = 9)))
+}
 
 P <- data |>
     filter(Year >= 1960) |>
@@ -103,15 +101,17 @@ P <- data |>
     )) +
     geom_point(alpha = 0.8) +
     scale_size(guide = "none", range = c(3, 16)) +
-    scale_x_log10(
-        breaks = 10^(-seq(-10, 10, by = 1)),
-        minor_breaks = rep(1:9, 2 * 10 + 1) * (10^rep(-10:10, each = 9)),
-        labels = trans_format("log10", math_format(10^.x))
+    scale_x_continuous(
+        transform = "log10",
+        breaks = breakslog10,
+        minor_breaks = minorbreakslog10,
+        labels = scales::trans_format("log10", scales::math_format(10^.x)),
+        guide = guide_axis_logticks(long = 2, mid = 1, short = 0.5)
     ) +
     coord_cartesian(xlim = c(100, 2e5), ylim = c(0, 10)) +
     scale_colour_colorblind() +
     labs(x = 'Income in comparable $', y = 'Babies per woman') +
-    guides(colour = guide_legend(override.aes = list(size = 5)))
+    guides(colour = guide_legend(override.aes = list(size = 3)))
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Using plotly to create an animated plot
