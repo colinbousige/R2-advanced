@@ -19,22 +19,23 @@ theme_set(theme_void())
 elections <- ___
 
 # Let's summarize the results for the whole country:
-total_results <- elections |> 
-    summarise(tot_votant               = ___,
-              tot_blanc                = ___,
-              tot_exprimes             = ___,
-              tot_inscrits             = ___,
-              tot_nul                  = ___,
-              tot_abs                  = ___,
-              tot_macron               = ___,
-              tot_lepen                = ___,
-              pourcent_macron_exprimes = ___,
-              pourcent_lepen_exprimes  = ___,
-              pourcent_macron          = ___,
-              pourcent_lepen           = ___,
-              pourcent_blanc           = ___,
-              pourcent_abstention      = ___
-              ) |> 
+total_results <- elections |>
+    summarise(
+        tot_votant = ___,
+        tot_blanc = ___,
+        tot_exprimes = ___,
+        tot_inscrits = ___,
+        tot_nul = ___,
+        tot_abs = ___,
+        tot_macron = ___,
+        tot_lepen = ___,
+        pourcent_macron_exprimes = ___,
+        pourcent_lepen_exprimes = ___,
+        pourcent_macron = ___,
+        pourcent_lepen = ___,
+        pourcent_blanc = ___,
+        pourcent_abstention = ___
+    ) |>
     mutate(gagnant = ifelse(pourcent_macron > 50, 'Macron', 'Le Pen'))
 
 # Now we can make a pie chart of the results, after making the previous table tidy:
@@ -42,60 +43,91 @@ total_results <- elections |>
 # We will make two pie charts, one with the numbers with respect to the total number of valid votes, and one with respect to the total number of registered voters.
 
 # numbers with respect to the total number of valid votes
-results_exprimes <- total_results |> 
-    select(___) |> 
+results_exprimes <- total_results |>
+    select(___) |>
     pivot_longer(___) |>
     mutate(candidat = ___) # We will use this later to label the pie chart
 
 # numbers with respect to the total number of registered voters
-results_absolu <- total_results |> 
-    select(___) |> 
+results_absolu <- total_results |>
+    select(___) |>
     pivot_longer(___) |>
     mutate(candidat = ___)
 
 # Let's do the pie charts, just run the code:
 absolu <- results_absolu |>
-    ggplot(aes(x = "", y = pourcent, fill = candidat))+
-        geom_bar(stat="identity", width=1)+
-        coord_polar("y")+
-        theme(legend.position="bottom")+
-        scale_fill_manual(values=c('Abstention'='lightgrey', 
-                                   'Blanc'='darkgrey', 
-                                   'M. Le Pen'='royalblue', 
-                                   'E. Macron'='orange'))+
-        labs(subtitle="Pourcentages par rapport aux inscrits sur liste électorale", 
-             fill=NULL, 
-             x="", y="")+
-        theme(plot.title = element_text(hjust = 0.5, size=25),
-              legend.position = 'none')+
-        geom_text(aes(label = glue::glue("{candidat}\n{round(pourcent,1)} %")),
-            position = position_stack(vjust = 0.5), col='white', size=8)
+    ggplot(aes(x = "", y = pourcent, fill = candidat)) +
+    geom_bar(stat = "identity", width = 1) +
+    coord_polar("y") +
+    theme(legend.position = "bottom") +
+    scale_fill_manual(
+        values = c(
+            'Abstention' = 'lightgrey',
+            'Blanc' = 'darkgrey',
+            'M. Le Pen' = 'royalblue',
+            'E. Macron' = 'orange'
+        )
+    ) +
+    labs(
+        subtitle = "Pourcentages par rapport aux inscrits sur liste électorale",
+        fill = NULL,
+        x = "",
+        y = ""
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5, size = 25),
+        legend.position = 'none'
+    ) +
+    geom_text(
+        aes(label = glue::glue("{candidat}\n{round(pourcent,1)} %")),
+        position = position_stack(vjust = 0.5),
+        col = 'white',
+        size = 8
+    )
 
-exprimes <- results_exprimes |> 
-    select(pourcent_macron_exprimes,pourcent_lepen_exprimes) |> 
-    pivot_longer(cols=everything(), 
-                 names_to='candidat', 
-                 values_to='pourcent',
-                 names_prefix = "pourcent_") |>
-    mutate(candidat = candidat |> str_replace_all("macron_exprimes", 'E. Macron')) |>
-    mutate(candidat = candidat |> str_replace_all("lepen_exprimes", 'M. Le Pen')) |>
-    ggplot(aes(x = "", y = pourcent, fill = candidat))+
-        geom_bar(stat="identity", width=1)+
-        coord_polar("y")+
-        theme(legend.position="bottom")+
-        scale_fill_manual(values=c('M. Le Pen'='royalblue', 
-                                   'E. Macron'='orange'))+
-        labs(subtitle="Pourcentages par rapport votes exprimés", 
-             fill=NULL, 
-             x="", y="")+
-        theme(plot.title = element_text(hjust = 0.5, size=25),
-              legend.position = 'none')+
-        geom_text(aes(label = glue::glue("{candidat}\n{round(pourcent,1)} %")),
-            position = position_stack(vjust = 0.5), col='white', size=8)
+exprimes <- results_exprimes |>
+    select(pourcent_macron_exprimes, pourcent_lepen_exprimes) |>
+    pivot_longer(
+        cols = everything(),
+        names_to = 'candidat',
+        values_to = 'pourcent',
+        names_prefix = "pourcent_"
+    ) |>
+    mutate(
+        candidat = candidat |> str_replace_all("macron_exprimes", 'E. Macron')
+    ) |>
+    mutate(
+        candidat = candidat |> str_replace_all("lepen_exprimes", 'M. Le Pen')
+    ) |>
+    ggplot(aes(x = "", y = pourcent, fill = candidat)) +
+    geom_bar(stat = "identity", width = 1) +
+    coord_polar("y") +
+    theme(legend.position = "bottom") +
+    scale_fill_manual(
+        values = c('M. Le Pen' = 'royalblue', 'E. Macron' = 'orange')
+    ) +
+    labs(
+        subtitle = "Pourcentages par rapport votes exprimés",
+        fill = NULL,
+        x = "",
+        y = ""
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5, size = 25),
+        legend.position = 'none'
+    ) +
+    geom_text(
+        aes(label = glue::glue("{candidat}\n{round(pourcent,1)} %")),
+        position = position_stack(vjust = 0.5),
+        col = 'white',
+        size = 8
+    )
 
-exprimes + absolu +
-    plot_annotation(title="Résultats du 2nd tour de l'élection présidentielle 2017")
-
+exprimes +
+    absolu +
+    plot_annotation(
+        title = "Résultats du 2nd tour de l'élection présidentielle 2017"
+    )
 
 
 # Now we want to plot the results on a map of France.
@@ -104,7 +136,7 @@ exprimes + absolu +
 # - remove the `subregion` column using `select()`
 # - perform the same string modifications as before on the region column
 
-cartefrance <- map_data('france') |> 
+cartefrance <- map_data('france') |>
     ___
 
 # Take a look at the data in `cartefrance` and `elections` using `glimpse()`
@@ -112,7 +144,7 @@ ___
 
 # Now we want a usable summary of the results.
 # We will use the `summarise()` and `mutate()` functions to calculate the same things as above, but for each region.
-results <- elections |> 
+results <- elections |>
     summarise(___) |>
     mutate(gagnant = ___)
 
@@ -121,13 +153,11 @@ carte_results <- ___
 
 # Now we can plot the results on a map of France, you can play with what you want to show.
 
-carte_results |> 
-    ggplot(aes(long,lat, group=group, fill=gagnant))+
-        geom_polygon()+
-        coord_map() +
-        scale_fill_manual(values=c('royalblue', 'orange'))
+carte_results |>
+    ggplot(aes(long, lat, group = group, fill = gagnant)) +
+    geom_polygon() +
+    coord_map() +
+    scale_fill_manual(values = c('royalblue', 'orange'))
 
 # Other interesting maps...
 ___
-
-

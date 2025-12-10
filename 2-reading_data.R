@@ -15,7 +15,7 @@ library(tidyverse)
 # Load them into separate `tibbles` using the `tidyverse` functions equivalent to `read.table()` and `read.csv()` -- and `readxl::read_excel()
 # Make sure that the `rubis_01` tibble has `w` and `intensity` as column names.
 
-rubis_01   <- ___("Data/rubis_01.txt")
+rubis_01 <- ___("Data/rubis_01.txt")
 population <- ___("Data/population.csv")
 FTIR_rocks <- ___("Data/FTIR_rocks.xlsx")
 
@@ -45,9 +45,7 @@ FTIR_rocks
 # - you need to get the column names
 # - you need to skip the line with the unit
 
-d <- read_table("Data/ATG.txt",
-                ___
-                )
+d <- read_table("Data/ATG.txt", ___)
 d
 
 
@@ -60,9 +58,10 @@ d
 # - Make sure to add a column named `"file"` containing the list of filenames: look at the `id` parameter
 
 flist <- list.files(____)
-tib <- read_csv(___,           # what do we want to read? give the vector of file names
-                id = ___)
-
+tib <- read_csv(
+    ___, # what do we want to read? give the vector of file names
+    id = ___
+)
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
