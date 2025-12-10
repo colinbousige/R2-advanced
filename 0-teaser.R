@@ -4,27 +4,21 @@
 # # # # # # # # # # # # # # # # #
 # Load libraries and set theme
 # # # # # # # # # # # # # # # # #
-library(tidyverse)
-library(glue)
-library(gganimate)
-library(plotly)
-library(ggthemes)
-library(scales)
+library(tidyverse) # for data manipulation and ggplot2
+library(gganimate) # for animations with ggplot2
+library(plotly) # for interactive plots and animations
+library(ggthemes) # for colorblind-friendly palette
+library(scales) # for logarithmic scale formatting
+# Set a nice theme for all ggplots in this script
 theme_set(
+    # Start from theme_bw()
     theme_bw() +
+        # Customize it
         theme(
+            # Larger text for better readability
             text = element_text(size = 18, color = "black"),
-            panel.border = element_rect(
-                color = "black",
-                fill = NA,
-                linewidth = 1
-            ),
-            panel.background = element_rect(fill = "white", color = NA),
-            plot.background = element_rect(fill = "white", color = NA),
-            legend.background = element_rect(fill = "white", color = NA),
-            strip.background = element_rect(fill = "white", color = NA),
-            strip.text = element_text(face = "bold"),
-            strip.text.y = element_text(angle = 0)
+            # Black axes lines and thicker than default
+            panel.border = element_rect(color = "black", linewidth = 1)
         )
 )
 
