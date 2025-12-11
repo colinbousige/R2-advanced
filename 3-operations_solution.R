@@ -37,7 +37,7 @@ mean(mtp$pop)
 
 popul.tidy |>
     filter(year == 2012) |> # You need to filter the data for the year 2012
-    select(pop) |> # Then select the right column
+    select(pop) |> # Then select the desired column
     sum()
 
 popul.tidy |>

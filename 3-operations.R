@@ -36,7 +36,7 @@ mtp <- popul.tidy |> ___
 
 popul.tidy |>
     ___ |> # You need to filter the data for the year 2012
-    ___ |> # Then select the right column
+    ___ |> # Then select the desired column
     ___ # And perform the sum of its data
 
 # What is the total population per year?
